@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input {
+            padding: 5px;
+            width: 150px;
+        }
+
+        select {
+            padding: 5px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Temperature Converter</h2>
+
+    <label for="temperature">Temperature:</label>
+    <input type="text" id="temperature" placeholder="Enter temperature" oninput="validateInput()">
+
+    <label for="unit">Unit:</label>
+    <select id="unit">
+        <option value="celsius">Celsius</option>
+        <option value="fahrenheit">Fahrenheit</option>
+        <option value="kelvin">Kelvin</option>
+    </select>
+
+    <button onclick="convertTemperature()">Convert</button>
+
+    <div id="result"></div>
+
+    <script>
+        function validateInput() {
+            const temperatureInput = document.getElementById('temperature');
+            temperatureInput.value = temperatureInput.value.replace(/[^0-9.-]/g, ''); // Allow only digits, dot, and minus sign
+        }
+
+        function convertTemperature() {
+            const temperatureInput = parseFloat(document.getElementById('temperature').value);
+            const unit = document.getElementById('unit').value;
+            let convertedTemperature;
+
+            if (isNaN(temperatureInput)) {
+                alert('Please enter a valid number for temperature.');
+                return;
+            }
+
+            switch (unit) {
+                case 'celsius':
+                    convertedTemperature = (temperatureInput - 32) * (5/9);
+                    break;
+                case 'fahrenheit':
+                    convertedTemperature = (temperatureInput * 9/5) + 32;
+                    break;
+                case 'kelvin':
+                    convertedTemperature = temperatureInput + 273.15;
+                    break;
+            }
+
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = `Converted Temperature: ${convertedTemperature.toFixed(2)} ${unit.toUpperCase()}`;
+        }
+    </script>
+</body>
+</html>
